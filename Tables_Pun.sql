@@ -89,8 +89,8 @@ CONSTRAINT fk_HRID FOREIGN KEY (companyHRId) REFERENCES HR_CONTACT (hrId)
 
 CREATE TABLE COMPANY_SCHEDULE (
 companyId INTEGER,
-deadline DATETIME,
-testTime DATETIME,
+deadline TIMESTAMP,
+testTime TIMESTAMP,
 testDuration INTEGER,
 testType VARCHAR(1) CHECK (testType IN ('I','F','B')),
 testEligibilityCGPA NUMBER(4,2),

@@ -62,7 +62,7 @@ CONSTRAINT FK_stafMail FOREIGN KEY (staffEmail) REFERENCES USERLOGIN (userEmail)
 );
 
 CREATE TABLE HR_CONTACT(
-hrId HRSeq.NEXTVAL,
+hrId INTEGER,
 hrName VARCHAR(20) NOT NULL,
 hrEmail VARCHAR(20) NOT NULL,
 hrContact INTEGER NOT NULL,
@@ -70,7 +70,7 @@ PRIMARY KEY(hrId)
 );
 	
 CREATE TABLE COMPANY(
-companyId comSeq.NEXTVAL,
+companyId INTEGER,
 companyName VARCHAR(20) NOT NULL UNIQUE,
 companyType VARCHAR(20),
 companyAddressLine1 VARCHAR(20),
@@ -128,7 +128,7 @@ CONSTRAINT fk_sIdOncmpCnfm FOREIGN KEY (studentId) REFERENCES STUDENT (studentId
 );
 
 CREATE TABLE OTHER_CONTACTS(
-contactId conSeq.NEXTVAL,
+contactId INTEGER,
 contactType VARCHAR(10) CHECK (contactType IN ('University', 'Company')), 
 organisationName VARCHAR(20) NOT NULL,
 field VARCHAR(30) NOT NULL,

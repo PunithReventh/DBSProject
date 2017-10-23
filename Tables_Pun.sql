@@ -30,7 +30,8 @@ facultyMobile INTEGER,
 facultyAddress VARCHAR(30), 
 facultyAdvisingBatch INTEGER NOT NULL,
 PRIMARY KEY(facultyEmail),
-CONSTRAINT facBatchUnique UNIQUE(facultyBranch,facultyAdvisingBatch)
+CONSTRAINT facBatchUnique UNIQUE(facultyBranch,facultyAdvisingBatch),
+CONSTRAINT FK_facMail FOREIGN KEY (facultyEmail) REFERENCES USERLOGIN (userEmail)
 );
 
 CREATE TABLE STUDENT (
@@ -46,7 +47,7 @@ studentBranch VARCHAR(15),
 studentCGPA NUMBER(4,2),
 studentResume VARCHAR(30),
 resumeApproved VARCHAR(1) CHECK (resumeApproved IN ('Y','N')),
-PRIMARY KEY (studentID)
+PRIMARY KEY (studentID),
 CONSTRAINT FK_stuMail FOREIGN KEY (studentEmail) REFERENCES USERLOGIN (userEmail)
 );
 

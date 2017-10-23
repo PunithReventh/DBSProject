@@ -150,5 +150,5 @@ studentId VARCHAR(10) NOT NULL,
 confirmed CHAR(1) CHECK (confirmed IN ('Y', 'N')),
 organisationId INTEGER NOT NULL,
 CONSTRAINT fk_sIdIndpCnfm FOREIGN KEY (studentId) REFERENCES STUDENT (studentId),
-CONSTRAINT fk_orgCnfm FOREIGN KEY (organisationId) REFERENCES INDEPENDENT_APPLICATION (organisationId)
+CONSTRAINT fk_orgCnfm FOREIGN KEY (organisationId) REFERENCES INDEP_APPLICATION (organisationId)
 );

@@ -25,7 +25,7 @@ CONSTRAINT FK_ROLE FOREIGN KEY (userRoleId) REFERENCES ROLE (roleId)
 CREATE TABLE FACULTY(
 facultyName VARCHAR(20) NOT NULL,
 facultyBranch VARCHAR(20),
-facultyEmail VARCHAR(20) NOT NULL UNIQUE,
+facultyEmail VARCHAR(20),
 facultyMobile INTEGER,
 facultyAddress VARCHAR(30), 
 facultyAdvisingBatch INTEGER NOT NULL,

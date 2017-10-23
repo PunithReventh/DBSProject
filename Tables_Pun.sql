@@ -123,7 +123,7 @@ CONSTRAINT fk_sIdOncmpCnfm FOREIGN KEY (studentId) REFERENCES STUDENT (studentId
 
 CREATE TABLE OTHER_CONTACTS(
 contactId conSeq.NEXTVAL,
-contactType VARCHAR(10) CHECK (COURSE_TYPE IN ('University', 'Company')), 
+contactType VARCHAR(10) CHECK (contactType IN ('University', 'Company')), 
 organisationName VARCHAR(20) NOT NULL,
 field VARCHAR(30) NOT NULL,
 eligibility VARCHAR(25),
@@ -140,7 +140,7 @@ PRIMARY KEY (organisationID));
 
 CREATE TABLE INDEP_CONFIRMATION(
 studentId INTEGER NOT NULL,
-confirmed CHAR(1) CHECK (COURSE_TYPE IN ('Y', 'N')),
+confirmed CHAR(1) CHECK (confirmed IN ('Y', 'N')),
 organisationId INTEGER NOT NULL,
 CONSTRAINT fk_sIdIndpCnfm FOREIGN KEY (studentId) REFERENCES STUDENT (studentId),
 CONSTRAINT fk_orgCnfm FOREIGN KEY (organisationId) REFERENCES INDEPENDENT_APPLICATION (organisationId),

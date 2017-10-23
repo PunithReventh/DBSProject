@@ -1,3 +1,19 @@
+CREATE SEQUENCE comSeq
+	START WITH 1
+	INCREMENT BY 1;
+CREATE SEQUENCE HRSeq
+	START WITH 1
+	INCREMENT BY 1;
+CREATE SEQUENCE conSeq
+	START WITH 1
+	INCREMENT BY 1;
+
+CREATE TABLE ROLE(
+roleId INTEGER,
+roleName VARCHAR(10) CHECK (roleName IN ('Student', 'Faculty', 'CDC')),
+PRIMARY KEY(roleId)
+);
+
 CREATE TABLE USERLOGIN (
 userEmail VARCHAR(20),
 userPassword VARCHAR(130) NOT NULL,
@@ -5,15 +21,16 @@ userRoleId VARCHAR(2) NOT NULL,
 PRIMARY KEY (userEmail)
 CONSTRAINT FK_ROLE FOREIGN KEY userRoleId REFERENCES ROLE (roleID));
 
-CREATE TABLE JOB (
-jobId INTEGER,
-jobName VARCHAR(30) NOT NULL,
-jobType VARCHAR(1) CHECK (jobType IN ('I', 'F')),
-jobLocation VARCHAR(10),
-jobPay INTEGER,
-jobEligibility VARCHAR(30),
-jobBenefits VARCHAR(30),
-PRIMARY KEY (jobID));
+CREATE TABLE FACULTY(
+facultyName VARCHAR(20) NOT NULL,
+facultyBranch VARCHAR(20),
+facultyEmail VARCHAR(20) NOT NULL UNIQUE,
+facultyMobile INTEGER,
+facultyAddress VARCHAR(30), 
+facultyAdvisingBatch INTEGER NOT NULL,
+PRIMARY KEY(facultyEmail),
+CONSTRAINT facBatchUnique UNIQUE(facultyBranch,facultyAdvisingBatch)
+);
 
 CREATE TABLE STUDENT (
 studentId VARCHAR(10),
@@ -40,12 +57,31 @@ staffPosition VARCHAR(10),
 PRIMARY KEY (staffEmail)
 CONSTRAINT FK_stafMail FOREIGN KEY (staffEmail) REFERENCES USERLOGIN (userEmail));
 
-CREATE TABLE INDEPENDENT_APPLICATION (
-organisationId INTEGER,
-organisationName VARCHAR(20) NOT NULL,
-internDetails VARCHAR(20),
-applicationLetter VARCHAR(30) NOT NULL,
-PRIMARY KEY (organisationID));
+CREATE TABLE HR_CONTACT(
+hrId HRSeq.NEXTVAL,
+hrName VARCHAR(20) NOT NULL,
+hrEmail VARCHAR(20) NOT NULL,
+hrContact INTEGER NOT NULL,
+PRIMARY KEY(hrId)
+);
+	
+CREATE TABLE COMPANY(
+companyId comSeq.NEXTVAL,
+companyName VARCHAR(20) NOT NULL UNIQUE,
+companyType VARCHAR(20),
+companyAddressLine1 VARCHAR(20),
+companyAddressLine2 VARCHAR(20),
+companyAddressCity VARCHAR(15),
+companyAddressState VARCHAR(20),
+companyAddressCountry VARHCAR(15),
+companyAddressPincode VARCHAR(10),
+companyWebsite VARCHAR(20),
+companyContact INTEGER NOT NULL,
+companyIndustrySector VARCHAR(20),
+companyHRId INTEGER NOT NULL UNIQUE,
+PRIMARY KEY(companyId),
+CONSTRAINT fk_HRID FOREIGN KEY (companyHRId) REFERENCES HR_CONTACT (hrId)
+);
 
 CREATE TABLE COMPANY_SCHEDULE (
 companyId INTEGER,
@@ -57,3 +93,55 @@ testEligibilityCGPA NUMBER(4,2),
 testEligibilityBranch VARCHAR(15),
 PRIMARY KEY (companyID, testTime),
 CONSTRAINT FK_SCHD_COMPID FOREIGN KEY companyID REFERENCES COMPANY(companyID));
+
+CREATE TABLE JOB (
+jobId INTEGER,
+jobName VARCHAR(30) NOT NULL,
+jobType VARCHAR(1) CHECK (jobType IN ('I', 'F')),
+jobLocation VARCHAR(10),
+jobPay INTEGER,
+jobEligibility VARCHAR(30),
+jobBenefits VARCHAR(30),
+PRIMARY KEY (jobID));
+
+CREATE TABLE INTERVIEW(
+companyId INTEGER NOT NULL, 
+jobId INTEGER NOT NULL,
+studentId INTEGER NOT NULL,
+CONSTRAINT sInterviewUnique UNIQUE(companyId,studentId),
+CONSTRAINT fk_cIdIntrvw FOREIGN KEY (companyId) REFERENCES COMPANY (companyId),
+CONSTRAINT fk_sIdIntrvw FOREIGN KEY (studentId) REFERENCES STUDENT (studentId),
+CONSTRAINT fk_jIdIntrvw FOREIGN KEY (jobId) REFERENCES JOB (jobId)
+);
+
+CREATE TABLE ONCAMP_CONFIRMATION(
+studentId INTEGER UNIQUE NOT NULL,
+companyId INTEGER NOT NULL,
+CONSTRAINT fk_cIdCnfm FOREIGN KEY (companyId) REFERENCES COMPANY (companyId),
+CONSTRAINT fk_sIdOncmpCnfm FOREIGN KEY (studentId) REFERENCES STUDENT (studentId),
+);
+
+CREATE TABLE OTHER_CONTACTS(
+contactId conSeq.NEXTVAL,
+contactType VARCHAR(10) CHECK (COURSE_TYPE IN ('University', 'Company')), 
+organisationName VARCHAR(20) NOT NULL,
+field VARCHAR(30) NOT NULL,
+eligibility VARCHAR(25),
+pointOfContact VARCHAR(20) NOT NULL,
+PRIMARY KEY(contactId)
+);
+
+CREATE TABLE INDEPENDENT_APPLICATION (
+organisationId INTEGER,
+organisationName VARCHAR(20) NOT NULL,
+internDetails VARCHAR(20),
+applicationLetter VARCHAR(30) NOT NULL,
+PRIMARY KEY (organisationID));
+
+CREATE TABLE INDEP_CONFIRMATION(
+studentId INTEGER NOT NULL,
+confirmed CHAR(1) CHECK (COURSE_TYPE IN ('Y', 'N')),
+organisationId INTEGER NOT NULL,
+CONSTRAINT fk_sIdIndpCnfm FOREIGN KEY (studentId) REFERENCES STUDENT (studentId),
+CONSTRAINT fk_orgCnfm FOREIGN KEY (organisationId) REFERENCES INDEPENDENT_APPLICATION (organisationId),
+);

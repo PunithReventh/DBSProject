@@ -18,8 +18,9 @@ CREATE TABLE USERLOGIN (
 userEmail VARCHAR(20),
 userPassword VARCHAR(130) NOT NULL,
 userRoleId VARCHAR(2) NOT NULL,
-PRIMARY KEY (userEmail)
-CONSTRAINT FK_ROLE FOREIGN KEY userRoleId REFERENCES ROLE (roleID));
+PRIMARY KEY (userEmail),
+CONSTRAINT FK_ROLE FOREIGN KEY userRoleId REFERENCES ROLE (roleID)
+);
 
 CREATE TABLE FACULTY(
 facultyName VARCHAR(20) NOT NULL,
@@ -46,7 +47,8 @@ studentCGPA NUMBER(4,2),
 studentResume VARCHAR(30),
 resumeApproved VARCHAR(1) CHECK (resumeApproved IN ('Y','N')),
 PRIMARY KEY (studentID)
-CONSTRAINT FK_stuMail FOREIGN KEY (studentEmail) REFERENCES USERLOGIN (userEmail));
+CONSTRAINT FK_stuMail FOREIGN KEY (studentEmail) REFERENCES USERLOGIN (userEmail)
+);
 
 CREATE TABLE STAFF (
 staffName VARCHAR(30),
@@ -55,7 +57,8 @@ staffMobile INTEGER,
 staffAddress VARCHAR(30),
 staffPosition VARCHAR(10),
 PRIMARY KEY (staffEmail)
-CONSTRAINT FK_stafMail FOREIGN KEY (staffEmail) REFERENCES USERLOGIN (userEmail));
+CONSTRAINT FK_stafMail FOREIGN KEY (staffEmail) REFERENCES USERLOGIN (userEmail)
+);
 
 CREATE TABLE HR_CONTACT(
 hrId HRSeq.NEXTVAL,
@@ -92,7 +95,8 @@ testType VARCHAR(1) CHECK (testType IN ('I','F','B')),
 testEligibilityCGPA NUMBER(4,2),
 testEligibilityBranch VARCHAR(15),
 PRIMARY KEY (companyID, testTime),
-CONSTRAINT FK_SCHD_COMPID FOREIGN KEY companyID REFERENCES COMPANY(companyID));
+CONSTRAINT FK_SCHD_COMPID FOREIGN KEY companyID REFERENCES COMPANY(companyID)
+);
 
 CREATE TABLE JOB (
 jobId INTEGER,
@@ -102,7 +106,8 @@ jobLocation VARCHAR(10),
 jobPay INTEGER,
 jobEligibility VARCHAR(30),
 jobBenefits VARCHAR(30),
-PRIMARY KEY (jobID));
+PRIMARY KEY (jobID)
+);
 
 CREATE TABLE INTERVIEW(
 companyId INTEGER NOT NULL, 
@@ -136,12 +141,13 @@ organisationId INTEGER,
 organisationName VARCHAR(20) NOT NULL,
 internDetails VARCHAR(20),
 applicationLetter VARCHAR(30) NOT NULL,
-PRIMARY KEY (organisationID));
+PRIMARY KEY (organisationID)
+);
 
 CREATE TABLE INDEP_CONFIRMATION(
 studentId INTEGER NOT NULL,
 confirmed CHAR(1) CHECK (confirmed IN ('Y', 'N')),
 organisationId INTEGER NOT NULL,
 CONSTRAINT fk_sIdIndpCnfm FOREIGN KEY (studentId) REFERENCES STUDENT (studentId),
-CONSTRAINT fk_orgCnfm FOREIGN KEY (organisationId) REFERENCES INDEPENDENT_APPLICATION (organisationId),
+CONSTRAINT fk_orgCnfm FOREIGN KEY (organisationId) REFERENCES INDEPENDENT_APPLICATION (organisationId)
 );

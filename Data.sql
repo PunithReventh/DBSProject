@@ -30,3 +30,12 @@ INSERT INTO STUDENT VALUES('14CS01007','Manisha Nath', 7010378398,'mn17@iitbbs.a
 INSERT INTO STUDENT VALUES('14CE01008','Om Prakash', 9884323423,'op18@iitbbs.ac.in','B-211, Mahanadi Hall of Residence','No.8, Mallu Road, Kochi','Analyst at Arab Consultancy','2014-2018','Civil', 7.1);
 INSERT INTO STUDENT VALUES('15ME01009','Qadeem Rizawat', 9444127237,'qr19@iitbbs.ac.in','B-522, Mahanadi Hall of Residence','No.9, Gowda Road, Bengaluru','Research Intern at IISc Bangalore','2015-2019','Mechanical', 7.2);
 INSERT INTO STUDENT VALUES('15EE01010','Sushmita Tiwari', 9176532763,'st10@iitbbs.ac.in','409, Subarnarekha Hall of Residence','No.10, Gandhi Road, Jaipur','Research Intern at IIT Kanpur','2015-2019','Electrical', 8.33);
+
+INSERT INTO FACULTY VALUES('Modi Sarkar','Computer Science','modi@iitbbs.ac.in',8976321089,'Faculty Quarters, IIT Bhubaneswar',2015);
+INSERT INTO FACULTY VALUES('Rahul Roti','Civil Engineering','rahul@iitbbs.ac.in',9872347165,'Chandrasekharpur Bhubaneswar',2014);
+INSERT INTO FACULTY VALUES('Radha Amit','Mechanical Engineering','amit@iitbbs.ac.in',8976321080,'Faculty Quarters, IIT Bhubaneswar',2015);
+INSERT INTO FACULTY VALUES('Bangani Madam','Computer Science','bangani@iitbbs.ac.in',8976321084,'Faculty Quarters, IIT Bhubaneswar',2014);
+INSERT INTO FACULTY VALUES('Anita Nani','Metallurgy','nani@iitbbs.ac.in',7823982443,'Faculty Quarters, IIT Bhubaneswar',2014);
+
+INSERT INTO STAFF VALUES('Pumith Sexist','tpo@iitbbs.ac.in',9867576451,'Staff Quarters, IIT Bhubaneswar','Placement Officer');
+INSERT INTO STAFF VALUES('Jamini Raj','cdc@iitbbs.ac.in',9867576413,'Staff Quarters, IIT Bhubaneswar','CDC Officer');

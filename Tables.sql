@@ -144,9 +144,9 @@ CONSTRAINT fk_sIdOncmpCnfm FOREIGN KEY (studentId) REFERENCES STUDENT (studentId
 CREATE TABLE OTHER_CONTACTS(
 contactId INTEGER,
 contactType VARCHAR(10) CHECK (contactType IN ('University', 'Company')), 
-organisationName VARCHAR(20) NOT NULL,
+organisationName VARCHAR(40) NOT NULL,
 field VARCHAR(30) NOT NULL,
-eligibility VARCHAR(25),
+eligibility VARCHAR(30),
 pointOfContact VARCHAR(20) NOT NULL,
 PRIMARY KEY(contactId)
 );

@@ -51,8 +51,6 @@ studentWorkExperience VARCHAR(50),
 studentBatch VARCHAR(10),
 studentBranch VARCHAR(20),
 studentCGPA NUMBER(4,2),
---studentResume VARCHAR(30),
---resumeApproved VARCHAR(1) CHECK (resumeApproved IN ('Y','N')),
 PRIMARY KEY (studentID),
 CONSTRAINT FK_stuMail FOREIGN KEY (studentEmail) REFERENCES USERLOGIN (userEmail)
 );
@@ -134,6 +132,7 @@ CREATE TABLE INTERVIEW(
 companyId INTEGER NOT NULL, 
 jobId INTEGER NOT NULL,
 studentId VARCHAR(10) NOT NULL,
+PRIMARY KEY (studentId, companyId),
 CONSTRAINT sInterviewUnique UNIQUE(companyId,studentId),
 CONSTRAINT fk_cIdIntrvw FOREIGN KEY (companyId) REFERENCES COMPANY (companyId),
 CONSTRAINT fk_sIdIntrvw FOREIGN KEY (studentId) REFERENCES STUDENT (studentId),
@@ -144,8 +143,7 @@ CREATE TABLE ONCAMP_CONFIRMATION(
 studentId VARCHAR(10) UNIQUE NOT NULL,
 companyId INTEGER NOT NULL,
 jobId INTEGER NOT NULL,
-CONSTRAINT fk_cIdCnfn FOREIGN KEY (companyId) REFERENCES COMPANY (companyId),
-CONSTRAINT fk_sIdOncmpCnfn FOREIGN KEY (studentId) REFERENCES STUDENT (studentId),
+CONSTRAINT fk_sIdOncmpCnfn FOREIGN KEY (studentId, companyId) REFERENCES INTERVIEW (studentId, companyID),
 CONSTRAINT fk_jIdOncmpCnfn FOREIGN KEY (jobId) REFERENCES JOB (jobId)
 );
 
@@ -158,12 +156,11 @@ eligibility VARCHAR(30),
 pointOfContact VARCHAR(20) NOT NULL,
 PRIMARY KEY(contactId)
 );
-ALTER TABLE INDEP_APPLICATION MODIFY ORGANISATIONNAME VARCHAR(50);
 
 CREATE TABLE INDEP_APPLICATION (
 organisationId INTEGER,
 studentId VARCHAR(10) NOT NULL,
-organisationName VARCHAR(30) NOT NULL,
+organisationName VARCHAR(50) NOT NULL,
 organisationType VARCHAR(10) CHECK (organisationType IN ('University', 'Company')),
 internDetails VARCHAR(40),
 PRIMARY KEY (organisationId, studentId),

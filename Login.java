@@ -202,6 +202,8 @@ public class Login extends javax.swing.JFrame {
                         while(getStaffNameRS.next()){
                             userName = getStaffNameRS.getString(1);
                         }
+                        CDCDashboard CD = new CDCDashboard();
+                        CD.setVisible(true);
                         break;      
                 }
                 jLabel3.setText("Login Successful! Welcome " + userName + "!");

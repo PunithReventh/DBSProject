@@ -165,7 +165,7 @@ studentId VARCHAR(10) NOT NULL,
 organisationName VARCHAR(30) NOT NULL,
 organisationType VARCHAR(10) CHECK (organisationType IN ('University', 'Company')),
 internDetails VARCHAR(40),
-PRIMARY KEY (organisationID),
+PRIMARY KEY (organisationId, studentId),
 CONSTRAINT fk_sIdIndpAppl FOREIGN KEY (studentId) REFERENCES STUDENT (studentId)	
 );
 
@@ -173,6 +173,4 @@ CREATE TABLE INDEP_CONFIRMATION(
 studentId VARCHAR(10) NOT NULL,
 confirmed CHAR(1) CHECK (confirmed IN ('Y', 'N')),
 organisationId INTEGER NOT NULL,
-CONSTRAINT fk_sIdIndpCnfm FOREIGN KEY (studentId) REFERENCES STUDENT (studentId),
-CONSTRAINT fk_orgCnfm FOREIGN KEY (organisationId) REFERENCES INDEP_APPLICATION (organisationId)
-);
+CONSTRAINT fk_sIdIndpCnfm FOREIGN KEY (organisationId, studentId) REFERENCES INDEP_APPLICATION (organisationId, studentId));

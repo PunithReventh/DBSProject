@@ -139,6 +139,7 @@ public class Login extends javax.swing.JFrame {
     static Connection connection = null;
     static String userName = null;
     static String studentId = null;
+    static String studentBatch = null;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -175,12 +176,13 @@ public class Login extends javax.swing.JFrame {
             if(mdpass.equalsIgnoreCase(actPass) == true){
                 switch(actRID){
                     case 1:
-                        PreparedStatement getStudName = connection.prepareStatement("SELECT STUDENTID,STUDENTNAME FROM STUDENT WHERE STUDENTEMAIL = ?");
+                        PreparedStatement getStudName = connection.prepareStatement("SELECT STUDENTID,STUDENTNAME,STUDENTBATCH FROM STUDENT WHERE STUDENTEMAIL = ?");
                         getStudName.setString(1,User);
                         ResultSet getStudNameRS = getStudName.executeQuery();
                         while(getStudNameRS.next()){
                             studentId = getStudNameRS.getString(1);
                             userName = getStudNameRS.getString(2);
+                            studentBatch = getStudNameRS.getString(3);
                         }
                         StudentDashboard SD = new StudentDashboard();
                         SD.setVisible(true);
@@ -244,6 +246,11 @@ public class Login extends javax.swing.JFrame {
     public static String getStudentId(){
         return studentId;
     }
+    
+    public static String getBatch(){
+        return studentBatch;
+    }
+    
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

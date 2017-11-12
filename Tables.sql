@@ -162,7 +162,7 @@ PRIMARY KEY(contactId)
 CREATE TABLE INDEP_APPLICATION (
 organisationId INTEGER,
 studentId VARCHAR(10) NOT NULL,
-organisationName VARCHAR(30) NOT NULL,
+organisationName VARCHAR(30) NOT NULL UNIQUE,
 organisationType VARCHAR(10) CHECK (organisationType IN ('University', 'Company')),
 internDetails VARCHAR(40),
 PRIMARY KEY (organisationID),

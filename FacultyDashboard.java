@@ -306,7 +306,7 @@ public class FacultyDashboard extends javax.swing.JFrame {
         compModel.setNumRows(0);
         try {
             String compScheduleQuery = "SELECT C.COMPANYNAME,CS.TESTTIME,CS.TESTTYPE,CS.TESTELIGIBILITYCGPA,"+
-                    "CS.TESTELIGIBILITYBRANCH FROM COMPANY C,COMPANY_SCHEDULE CS WHERE C.COMPANYID = CS.COMPANYID";
+                    "CS.TESTELIGIBILITYBRANCH FROM COMPANY C,COMPANY_SCHEDULE CS WHERE C.COMPANYID = CS.COMPANYID AND CS.TESTTIME > SYSDATE";
             Statement showCompSchedule = connection.createStatement();
             ResultSet compScheduleTable = showCompSchedule.executeQuery(compScheduleQuery);
             int count = 0;
@@ -326,12 +326,25 @@ public class FacultyDashboard extends javax.swing.JFrame {
         DefaultTableModel statusModel = (DefaultTableModel) jTable2.getModel();
         statusModel.setNumRows(0);
         try {
+            PreparedStatement getBatch = connection.prepareStatement("SELECT FACULTYBRANCH, FACULTYADVISINGBATCH FROM FACULTY WHERE FACULTYNAME = ?");
+            getBatch.setString(1, userName);
+            ResultSet bRS = getBatch.executeQuery();
+            String fbranch = null;
+            String fbatch = null;
+            while(bRS.next()){
+                fbranch = bRS.getString(1);
+                fbatch = String.valueOf(bRS.getInt(2));
+            }
             String showStatusQuery = "(SELECT C.STUDENTID, S.STUDENTNAME, CM.COMPANYNAME orgname FROM ONCAMP_CONFIRMATION C,"+
-                    "STUDENT S, COMPANY CM WHERE S.STUDENTID = C.STUDENTID AND CM.COMPANYID = C.COMPANYID) UNION "+
+                    "STUDENT S, COMPANY CM WHERE S.STUDENTBRANCH = ? AND S.STUDENTBATCH LIKE ?||'%' AND S.STUDENTID = C.STUDENTID AND CM.COMPANYID = C.COMPANYID) UNION "+
                     "(SELECT C.STUDENTID, S.STUDENTNAME, IA.ORGANISATIONNAME orgname FROM INDEP_CONFIRMATION C, STUDENT S, INDEP_APPLICATION IA"+
-                    " WHERE S.STUDENTID = C.STUDENTID AND C.ORGANISATIONID = IA.ORGANISATIONID)";
-            Statement showStatus = connection.createStatement();
-            ResultSet showStatusTable = showStatus.executeQuery(showStatusQuery);
+                    " WHERE S.STUDENTBRANCH = ? AND S.STUDENTBATCH LIKE ?||'%' AND S.STUDENTID = C.STUDENTID AND C.ORGANISATIONID = IA.ORGANISATIONID)";
+            PreparedStatement showStatus = connection.prepareStatement(showStatusQuery);
+            showStatus.setString(1,fbranch);
+            showStatus.setString(2, fbatch);
+            showStatus.setString(3,fbranch);
+            showStatus.setString(4, fbatch);
+            ResultSet showStatusTable = showStatus.executeQuery();
             int cnt = 0;
             while(showStatusTable.next()){
                 cnt++;

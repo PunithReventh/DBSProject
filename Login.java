@@ -203,6 +203,8 @@ public class Login extends javax.swing.JFrame {
                         break;      
                 }
                 jLabel3.setText("Login Successful! Welcome " + userName + "!");
+                  
+                jPasswordField1.setText("");
             }         
             else{
                 jLabel3.setText("Login Failed! Check username and password!");

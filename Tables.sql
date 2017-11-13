@@ -171,5 +171,6 @@ CREATE TABLE INDEP_CONFIRMATION(
 studentId VARCHAR(10) NOT NULL,
 confirmed CHAR(1) CHECK (confirmed IN ('Y', 'N')),
 organisationId INTEGER NOT NULL,
-CONSTRAINT fk_sIdIndpCnfm FOREIGN KEY (organisationId, studentId) REFERENCES INDEP_APPLICATION (organisationId, studentId) ON DELETE CASCADE
+CONSTRAINT fk_sIdIndpCnfm FOREIGN KEY (organisationId, studentId) REFERENCES INDEP_APPLICATION (organisationId, studentId) 
+ON DELETE CASCADE
 );
